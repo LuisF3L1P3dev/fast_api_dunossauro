@@ -6,7 +6,7 @@ authors = [
     {name = "LuisF3L1P3dev",email = "dantas.luis@escolar.ifrn.edu.br"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<4.0"
 dependencies = [
 ]
 
