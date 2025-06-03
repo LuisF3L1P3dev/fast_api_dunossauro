@@ -20,3 +20,5 @@ build-backend = "poetry.core.masonry.api"
 ruff = "^0.11.12"
 
 [tool.ruff]
+line-length = 79
+extend-exclude = ['migrations']
