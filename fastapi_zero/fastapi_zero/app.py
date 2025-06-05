@@ -12,7 +12,7 @@ app = FastAPI(title='MinhaAPI')
     response_model=Message
     )
 def read_root():
-    return {'hello': 'world'}
+    return {'message': 'hello world'}
 
 @app.get('/page', response_class=HTMLResponse)
 def read_page_html():
