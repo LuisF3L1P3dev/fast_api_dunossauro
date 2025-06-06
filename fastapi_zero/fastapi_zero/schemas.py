@@ -10,3 +10,6 @@ class UserPublic(BaseModel):
 
 class UserSchema(UserPublic):
     password: str
+
+class UserDB(UserSchema):
+    id: int
