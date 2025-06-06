@@ -1,4 +1,5 @@
 from http import HTTPStatus
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -6,13 +7,12 @@ from fastapi_zero.schemas import Message
 
 app = FastAPI(title='MinhaAPI')
 
-@app.get(
-    '/',
-    status_code=HTTPStatus.OK,
-    response_model=Message
-    )
+
+@app.get('/', status_code=HTTPStatus.OK, response_model=Message)
 def read_root():
     return {'message': 'hello world'}
+    # return Message(message='hello world')
+
 
 @app.get('/page', response_class=HTMLResponse)
 def read_page_html():

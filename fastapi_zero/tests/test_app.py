@@ -6,7 +6,6 @@ from fastapi_zero.app import app
 
 
 def test_root():
-
     """
     Etapa teste triplo (AAA):
     - A: Arrange - Arranjo
@@ -23,3 +22,12 @@ def test_root():
     # Assert
     assert response.json() == {'hello': 'world'}
     assert response.status_code == HTTPStatus.OK
+
+
+def test_page_html():
+    client = TestClient(app)
+
+    reponse = client.get('/page')
+
+    assert reponse.status_code == HTTPStatus.OK
+    assert '<h1> Hello World </h1>' in reponse.text
