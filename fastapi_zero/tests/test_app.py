@@ -20,7 +20,7 @@ def test_root():
     response = client.get('/')
 
     # Assert
-    assert response.json() == {'hello': 'world'}
+    assert response.json() == {'message': 'hello world'}
     assert response.status_code == HTTPStatus.OK
 
 
@@ -30,4 +30,24 @@ def test_page_html():
     reponse = client.get('/page')
 
     assert reponse.status_code == HTTPStatus.OK
-    assert '<h1> Hello World </h1>' in reponse.text
+    assert '<h1> hello world </h1>' in reponse.text
+
+
+def test_create_user():
+    client = TestClient(app)
+
+    response = client.post(
+        '/users/',
+        json={
+            'username': 'alice',
+            'email': 'alice@example.com',
+            'password': 'secret',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.CREATED
+    assert response.json() == {
+        'id': 1,
+        'username': 'alice',
+        'email': 'alice@example.com',
+    }

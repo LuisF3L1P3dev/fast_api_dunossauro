@@ -3,11 +3,12 @@ from http import HTTPStatus
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-from fastapi_zero.schemas import Message, UserSchema, UserPublic, UserDB
+from fastapi_zero.schemas import Message, UserCreate, UserDB, UserPublic
 
 app = FastAPI(title='MinhaAPI')
 
 database = []
+
 
 @app.get('/', status_code=HTTPStatus.OK, response_model=Message)
 def read_root():
@@ -23,17 +24,16 @@ def read_page_html():
         <title> Nosso olá mundo!</title>
       </head>
       <body>
-        <h1> Olá Mundo </h1>
+        <h1> hello world </h1>
       </body>
     </html>"""
 
-@app.post('/users/', status_code=HTTPStatus.CREATED,
-    response_model=UserPublic    
-    )
-def create_user(user: UserSchema):
+
+@app.post('/users/', status_code=HTTPStatus.CREATED, response_model=UserPublic)
+def create_user(user: UserCreate):
     user_with_id = UserDB(
         **user.model_dump(),
-        id=len(database)+1,
+        id=len(database) + 1,
     )
 
     database.append(user_with_id)
