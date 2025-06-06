@@ -3,7 +3,7 @@ from http import HTTPStatus
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-from fastapi_zero.schemas import Message
+from fastapi_zero.schemas import Message, UserSchema
 
 app = FastAPI(title='MinhaAPI')
 
@@ -25,3 +25,7 @@ def read_page_html():
         <h1> Olá Mundo </h1>
       </body>
     </html>"""
+
+@app.post('/users/', status_code=HTTPStatus.CREATED)
+def create_user(user: UserSchema):
+    return user
