@@ -23,3 +23,6 @@ class UserCreate(BaseModel):
     username: str
     email: EmailStr
     password: str
+
+class UserList(BaseModel):
+    users: list[UserPublic]
