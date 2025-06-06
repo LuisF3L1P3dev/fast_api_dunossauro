@@ -1,11 +1,17 @@
 from http import HTTPStatus
 
+import pytest
 from fastapi.testclient import TestClient
 
 from fastapi_zero.app import app
 
 
-def test_root():
+@pytest.fixture
+def client():
+    return TestClient(app)
+
+
+def test_root(client):
     """
     Etapa teste triplo (AAA):
     - A: Arrange - Arranjo
@@ -13,8 +19,7 @@ def test_root():
     - A: Assert - Afirmação
     """
 
-    # Arrange
-    client = TestClient(app)
+    # Arrange já está no pytest
 
     # Act
     response = client.get('/')
@@ -24,18 +29,14 @@ def test_root():
     assert response.status_code == HTTPStatus.OK
 
 
-def test_page_html():
-    client = TestClient(app)
-
+def test_page_html(client):
     reponse = client.get('/page')
 
     assert reponse.status_code == HTTPStatus.OK
     assert '<h1> hello world </h1>' in reponse.text
 
 
-def test_create_user():
-    client = TestClient(app)
-
+def test_create_user(client):
     response = client.post(
         '/users/',
         json={
