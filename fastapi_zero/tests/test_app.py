@@ -53,16 +53,35 @@ def test_create_user(client):
         'email': 'alice@example.com',
     }
 
+
 def test_read_users(client):
     response = client.get('/users/')
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json == {
-        'users':[
+    assert response.json() == {
+        'users': [
             {
                 'id': 1,
                 'username': 'alice',
                 'email': 'alice@example.com',
             }
         ]
+    }
+
+
+def test_update_user(client):
+    response = client.put(
+        '/users/1',
+        json={
+            'username': 'bob',
+            'email': 'bob@example.com',
+            'password': 'secret',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        'id': 1,
+        'username': 'bob',
+        'email': 'bob@example.com',
     }

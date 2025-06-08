@@ -8,7 +8,8 @@ from fastapi_zero.schemas import (
     UserCreate,
     UserDB,
     UserList,
-    UserPublic,
+    # UserPublic,
+    UserResponse,
     UserSchema,
 )
 
@@ -36,7 +37,9 @@ def read_page_html():
     </html>"""
 
 
-@app.post('/users/', status_code=HTTPStatus.CREATED, response_model=UserPublic)
+@app.post(
+    '/users/', status_code=HTTPStatus.CREATED, response_model=UserResponse
+)
 def create_user(user: UserCreate):
     user_with_id = UserDB(
         **user.model_dump(),
@@ -53,9 +56,13 @@ def read_users():
     return {'users': database}
 
 
-@app.put('/users/{user_id}', status_code=HTTPStatus.OK, response_model=UserPublic)
+@app.put(
+    '/users/{user_id}',
+    status_code=HTTPStatus.OK,
+    response_model=UserResponse,
+)
 def update_user(user_id: int, user: UserSchema):
-    if user_id > len(database) or user_id < 1: 
+    if user_id > len(database) or user_id < 1:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND, detail='User not found'
         )
